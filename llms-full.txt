@@ -2368,6 +2368,18 @@ The rotating black hole in $D > 4$ spacetime dimensions, the vacuum solution Rob
 - chart Equal Spins, Five Dimensions: coordinates $(t, \rho, \theta, \phi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{\rho^2}\left(c\,dt - \dfrac{a}{2}\left(d\psi + \cos\theta\,d\phi\right)\right)^2 + \dfrac{d\rho^2}{1 - \dfrac{\mu}{\rho^2} + \dfrac{\mu a^2}{\rho^4}} + \dfrac{\rho^2}{4}\left(d\theta^2 + \sin^2\theta\,d\phi^2 + \left(d\psi + \cos\theta\,d\phi\right)^2\right)$$
 - chart Boyer-Lindquist, One Spin, Six Dimensions: coordinates $(t, r, \theta, \phi, \chi, \psi)$, $$ds^2 = -c^2dt^2 + \dfrac{\mu}{r\left(r^2 + a^2\cos^2\theta\right)}\left(c\,dt - a\sin^2\theta\,d\phi\right)^2 + \dfrac{r^2 + a^2\cos^2\theta}{r^2 + a^2 - \dfrac{\mu}{r}}dr^2 + \left(r^2 + a^2\cos^2\theta\right)d\theta^2 + \left(r^2 + a^2\right)\sin^2\theta\,d\phi^2 + r^2\cos^2\theta\left(d\chi^2 + \sin^2\chi\,d\psi^2\right)$$
 
+### Horowitz-Ross Naked Black Holes
+
+Large static black holes, charged and close to extremality, in theories with a dilaton, whose curvature invariants are small near the horizon and whose tidal forces crush a falling body outside it. Gary T. Horowitz and Simon F. Ross found them in 1997 among the dilaton black holes of any coupling, the black holes with two charges, and the black holes and branes of string theory.
+
+- id: `naked_black_holes`
+- tags: static, stationary, spherically symmetric, four-dimensional, black hole, charged black hole, electric charge, magnetic charge, mass, electromagnetic field, dilaton, scalar field, Einstein-Maxwell-dilaton, string theory, low energy string theory, extremal, cosmic censorship, information paradox, curvature singularity, null singularity, timelike singularity, horizon, event horizon, inner horizon, asymptotically flat, exact solution, Lorentzian, Einstein equations, idealized model
+- signature: (-,+,+,+)
+- full data: https://damiansowinski.com/MFS/assets/data/metrics/naked_black_holes.json
+- chart Dilaton Coupling $a$: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\left(r - r_+\right)\left(r - r_-\right)}{R^2}c^2dt^2 + \dfrac{R^2\,dr^2}{\left(r - r_+\right)\left(r - r_-\right)} + R^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart Electric and Magnetic Charges: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{\left(r - r_+\right)\left(r - r_-\right)}{r^2 - \Sigma^2}c^2dt^2 + \dfrac{\left(r^2 - \Sigma^2\right)dr^2}{\left(r - r_+\right)\left(r - r_-\right)} + \left(r^2 - \Sigma^2\right)\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+- chart String Metric, Winding and Momentum: coordinates $(t, r, \theta, \phi)$, $$ds^2 = -\dfrac{r\left(r - r_0\right)}{\left(r + r_1\right)\left(r + r_p\right)}c^2dt^2 + \dfrac{r\,dr^2}{r - r_0} + r^2\left(d\theta^2 + \sin^2\theta\,d\phi^2\right)$$
+
 ### Nappi-Witten Closed Expanding Universe
 
 A closed universe in string theory, with space shaped as an inhomogeneous 3-sphere that expands and recollapses. A dilaton and an antisymmetric tensor accompany the geometry; the cosmology arises from an exact conformal field theory.

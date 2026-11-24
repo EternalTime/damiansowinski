@@ -4,7 +4,7 @@
   "page_url": "https://damiansowinski.com/MFS/",
   "references_url": "https://damiansowinski.com/MFS/assets/data/references.json",
   "note": "The catalogue page chooses a spacetime in the browser and has no address per spacetime, so page_url is the catalogue itself. data_url is the full record the page draws from: Christoffel symbols, Riemann, Ricci, Einstein and Weyl tensors, geodesic equations and the history with its references.",
-  "count": 271,
+  "count": 272,
   "spacetimes": [
     {
       "id": "ab_metrics",
@@ -22197,6 +22197,11 @@
           "id": "repulson",
           "kind": "family",
           "text": "Charged solutions of the same low energy string theory with no horizon and a singularity that repels massive particles, some of them with zero mass [kallosh1995white]."
+        },
+        {
+          "id": "naked_black_holes",
+          "kind": "generalisation",
+          "text": "The same black holes with the dilaton coupled at any strength $a$. Close to extremality and with a large horizon they crush a falling body with tidal forces outside the horizon, where all curvature invariants are small [horowitz1997naked]."
         }
       ],
       "references": [
@@ -22232,7 +22237,8 @@
         "clement2003",
         "dowker1994b",
         "dowker1995",
-        "kallosh1995white"
+        "kallosh1995white",
+        "horowitz1997naked"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/dilaton_black_hole.json",
@@ -40904,6 +40910,11 @@
           "id": "repulson",
           "kind": "family",
           "text": "Renata Kallosh and Andrei Linde's charged solutions of the heterotic string hold the extreme electric hole of this family at zero charge, and one such hole with a partner of opposite charge and negative mass, placed at one point, makes a massless one [kallosh1995white, ortin1996]."
+        },
+        {
+          "id": "naked_black_holes",
+          "kind": "generalisation",
+          "text": "The four dimensional metric of the charged hole with the coupling $\\sqrt{3}$ of the dilaton freed to any strength $a$. Close to extremality and with a large horizon these black holes are naked [horowitz1997naked]."
         }
       ],
       "references": [
@@ -40927,7 +40938,8 @@
         "horowitzmaeda2002",
         "myers1987compact",
         "kallosh1995white",
-        "ortin1996"
+        "ortin1996",
+        "horowitz1997naked"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/kaluza_klein_black_hole.json",
@@ -60931,6 +60943,299 @@
       ]
     },
     {
+      "id": "naked_black_holes",
+      "name": "Horowitz-Ross Naked Black Holes",
+      "short_name": "Naked Black Holes",
+      "description": "Large static black holes, charged and close to extremality, in theories with a dilaton, whose curvature invariants are small near the horizon and whose tidal forces crush a falling body outside it. Gary T. Horowitz and Simon F. Ross found them in 1997 among the dilaton black holes of any coupling, the black holes with two charges, and the black holes and branes of string theory.",
+      "tags": [
+        "static",
+        "stationary",
+        "spherically symmetric",
+        "four-dimensional",
+        "black hole",
+        "charged black hole",
+        "electric charge",
+        "magnetic charge",
+        "mass",
+        "electromagnetic field",
+        "dilaton",
+        "scalar field",
+        "Einstein-Maxwell-dilaton",
+        "string theory",
+        "low energy string theory",
+        "extremal",
+        "cosmic censorship",
+        "information paradox",
+        "curvature singularity",
+        "null singularity",
+        "timelike singularity",
+        "horizon",
+        "event horizon",
+        "inner horizon",
+        "asymptotically flat",
+        "exact solution",
+        "Lorentzian",
+        "Einstein equations",
+        "idealized model"
+      ],
+      "signature": "(-,+,+,+)",
+      "convention": "We keep factors of $c$ explicit. The Ricci tensor is the standard contraction, $R_{\\mu\\nu} = R^\\alpha{}_{\\mu\\alpha\\nu}$.",
+      "related": [
+        {
+          "id": "dilaton_black_hole",
+          "kind": "special_case",
+          "text": "The black hole of coupling $a = 1$, the value of string theory, with $r_s = r_+$ and $r_d = r_-$. Close to extremality and with a large horizon it is naked [horowitz1997naked]."
+        },
+        {
+          "id": "rn_metric",
+          "kind": "special_case",
+          "text": "The black hole with the dilaton switched off, $a = 0$, where $r_-$ is an inner horizon. Its curvature is unchanged by a radial boost, so an observer falling in meets tidal forces of about the size an observer at rest measures [horowitz1997naked]."
+        },
+        {
+          "id": "schwarzschild",
+          "kind": "special_case",
+          "text": "The black hole with no charge, $r_- = 0$. Its curvature is unchanged by a radial boost, so an observer falling in from rest feels the tidal forces an observer at rest measures there [horowitz1997naked]."
+        },
+        {
+          "id": "kaluza_klein_black_hole",
+          "kind": "special_case",
+          "text": "The black hole of coupling $a = \\sqrt{3}$, the coupling of Kaluza and Klein's theory reduced to four dimensions, is the four dimensional metric of their charged hole, with $r$ shifted by $r_-$ [herdeiro2026charged]. Set spinning, it keeps its tidal forces finite at zero temperature [herdeiro2026charged]."
+        },
+        {
+          "id": "string_bh_three_four_charges",
+          "kind": "family",
+          "text": "The black hole of five dimensions with three charges, whose entropy and radiation strings and D-branes explain, is naked when one charge is much smaller than another and the horizon is large [horowitz1997naked]."
+        },
+        {
+          "id": "three_brane_throat",
+          "kind": "family",
+          "text": "The black branes with one Ramond-Ramond charge are naked close to extremality. At extremality the three-brane alone among them keeps its tidal forces finite as its radius falls to zero, as its smooth extension through the horizon requires [horowitz1997naked]."
+        }
+      ],
+      "references": [
+        "horowitz1997naked",
+        "horowitz1998properties",
+        "gibbons1988",
+        "garfinkle1991",
+        "booth1999static",
+        "lue2000",
+        "zaslavskii2007",
+        "ovcharenko2025",
+        "herdeiro2026charged",
+        "blazquez2026spinning"
+      ],
+      "page_url": "https://damiansowinski.com/MFS/",
+      "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/naked_black_holes.json",
+      "charts": [
+        {
+          "id": "dilaton",
+          "name": "Dilaton Coupling $a$",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (r_-, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "0 \\le r_- < r_+,\\quad a > 0",
+            "r = r_+ \\;\\text{(the event horizon)}",
+            "r = r_- \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_+",
+              "description": "Radius of the event horizon, a length"
+            },
+            {
+              "symbol": "r_-",
+              "description": "Radius of the singularity, a length, with $r_+r_- = (1 + a^2)Q^2$ for the charge $Q$ in units with $G = c = 1$; $r_- = r_+$ is the extremal limit, and $r_- = 0$ is Schwarzschild's black hole"
+            },
+            {
+              "symbol": "a",
+              "description": "Coupling of the dilaton to the Maxwell field, a pure number; $a = 1$ is the coupling of string theory, $a = \\sqrt{3}$ that of Kaluza and Klein's theory, and $a = 0$ is Reissner and Nordström's black hole, whose $r_-$ is an inner horizon"
+            },
+            {
+              "symbol": "R = r\\left(1 - \\dfrac{r_-}{r}\\right)^{a^2/(1 + a^2)}",
+              "description": "Areal radius, a length: the sphere through each point has area $4\\pi R^2$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Horowitz and Ross [horowitz1997naked], with $t$ having dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\left(r - r_+\\right)\\left(r - r_-\\right)}{R^2}c^2dt^2 + \\dfrac{R^2\\,dr^2}{\\left(r - r_+\\right)\\left(r - r_-\\right)} + R^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r - r_+\\right)\\left(r - r_-\\right)}{R^2}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{R^2}{\\left(r - r_+\\right)\\left(r - r_-\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "R^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "R^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "\\dfrac{2r_-^2\\,a^2\\left(r - r_+\\right)}{r^2\\,R^2\\left(1 + a^2\\right)^2\\left(r - r_-\\right)}",
+          "kretschmann": "K = \\dfrac{12r^4\\,r_+^2 + 24r^4\\,r_+\\,r_- + 12r^4\\,r_-^2 - 72r^3\\,r_+^2\\,r_- - 96r^3\\,r_+\\,r_-^2 - 24r^3\\,r_-^3 + 164r^2\\,r_+^2\\,r_-^2 + 120r^2\\,r_+\\,r_-^3 + 12r^2\\,r_-^4 - 160r\\,r_+^2\\,r_-^3 - 48r\\,r_+\\,r_-^4 + 56r_+^2\\,r_-^4 + 48r^4\\,r_+^2\\,a^2 + 48r^4\\,r_+\\,r_-\\,a^2 - 216r^3\\,r_+^2\\,r_-\\,a^2 - 112r^3\\,r_+\\,r_-^2\\,a^2 + 8r^3\\,r_-^3\\,a^2 + 344r^2\\,r_+^2\\,r_-^2\\,a^2 + 56r^2\\,r_+\\,r_-^3\\,a^2 - 8r^2\\,r_-^4\\,a^2 - 216r\\,r_+^2\\,r_-^3\\,a^2 + 8r\\,r_+\\,r_-^4\\,a^2 + 40r_+^2\\,r_-^4\\,a^2 + 72r^4\\,r_+^2\\,a^4 - 24r^4\\,r_-^2\\,a^4 - 216r^3\\,r_+^2\\,r_-\\,a^4 + 64r^3\\,r_+\\,r_-^2\\,a^4 + 24r^3\\,r_-^3\\,a^4 + 196r^2\\,r_+^2\\,r_-^2\\,a^4 - 80r^2\\,r_+\\,r_-^3\\,a^4 + 8r^2\\,r_-^4\\,a^4 - 56r\\,r_+^2\\,r_-^3\\,a^4 + 12r_+^2\\,r_-^4\\,a^4 + 48r^4\\,r_+^2\\,a^6 - 48r^4\\,r_+\\,r_-\\,a^6 - 72r^3\\,r_+^2\\,r_-\\,a^6 + 80r^3\\,r_+\\,r_-^2\\,a^6 - 8r^3\\,r_-^3\\,a^6 + 16r^2\\,r_+^2\\,r_-^2\\,a^6 - 16r^2\\,r_+\\,r_-^3\\,a^6 + 12r^4\\,r_+^2\\,a^8 - 24r^4\\,r_+\\,r_-\\,a^8 + 12r^4\\,r_-^2\\,a^8}{r^4\\,R^4\\left(1 + a^2\\right)^4\\left(r - r_-\\right)^2}"
+        },
+        {
+          "id": "two_charges",
+          "name": "Electric and Magnetic Charges",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (|\\Sigma|, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "|\\Sigma| \\le r_- < r_+",
+            "r = r_+ \\;\\text{(the event horizon)}",
+            "r = r_- \\;\\text{(the inner horizon)}",
+            "r = |\\Sigma| \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_+",
+              "description": "Radius of the event horizon, a length"
+            },
+            {
+              "symbol": "r_-",
+              "description": "Radius of the inner horizon, a length; $r_- = r_+$ is the extremal limit"
+            },
+            {
+              "symbol": "\\Sigma",
+              "description": "Length set by the mass $M$, the electric charge $Q$, and the magnetic charge $P$, $\\Sigma = (P^2 - Q^2)/2M$, with $r_\\pm = M \\pm (M^2 + \\Sigma^2 - Q^2 - P^2)^{1/2}$ in units with $G = c = 1$; $\\Sigma = 0$ is Reissner and Nordström's black hole, and $|\\Sigma| = r_-$ the black hole of one charge"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Horowitz and Ross's black hole with two Maxwell fields [horowitz1997naked], with $t$ having dimensions of time, and take components in the chart $x^0 = ct$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{\\left(r - r_+\\right)\\left(r - r_-\\right)}{r^2 - \\Sigma^2}c^2dt^2 + \\dfrac{\\left(r^2 - \\Sigma^2\\right)dr^2}{\\left(r - r_+\\right)\\left(r - r_-\\right)} + \\left(r^2 - \\Sigma^2\\right)\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{\\left(r - r_+\\right)\\left(r - r_-\\right)}{\\left(r + \\Sigma\\right)\\left(r - \\Sigma\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{\\left(r + \\Sigma\\right)\\left(r - \\Sigma\\right)}{\\left(r - r_+\\right)\\left(r - r_-\\right)}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "\\left(r + \\Sigma\\right)\\left(r - \\Sigma\\right)"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "\\left(r + \\Sigma\\right)\\left(r - \\Sigma\\right)\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = \\dfrac{2\\Sigma^2\\left(r - r_+\\right)\\left(r - r_-\\right)}{\\left(r + \\Sigma\\right)^3\\left(r - \\Sigma\\right)^3}",
+          "kretschmann": "K = \\dfrac{12r^6\\,r_+^2 + 24r^6\\,r_+\\,r_- + 12r^6\\,r_-^2 - 48r^5\\,r_+^2\\,r_- - 48r^5\\,r_+\\,r_-^2 - 64r^5\\,r_+\\,\\Sigma^2 - 64r^5\\,r_-\\,\\Sigma^2 + 56r^4\\,r_+^2\\,r_-^2 + 40r^4\\,r_+^2\\,\\Sigma^2 + 216r^4\\,r_+\\,r_-\\,\\Sigma^2 + 40r^4\\,r_-^2\\,\\Sigma^2 + 92r^4\\,\\Sigma^4 - 120r^3\\,r_+^2\\,r_-\\,\\Sigma^2 - 120r^3\\,r_+\\,r_-^2\\,\\Sigma^2 - 128r^3\\,r_+\\,\\Sigma^4 - 128r^3\\,r_-\\,\\Sigma^4 + 40r^2\\,r_+^2\\,r_-^2\\,\\Sigma^2 + 56r^2\\,r_+^2\\,\\Sigma^4 + 184r^2\\,r_+\\,r_-\\,\\Sigma^4 + 56r^2\\,r_-^2\\,\\Sigma^4 + 8r^2\\,\\Sigma^6 - 48r\\,r_+^2\\,r_-\\,\\Sigma^4 - 48r\\,r_+\\,r_-^2\\,\\Sigma^4 - 24r\\,r_+\\,\\Sigma^6 - 24r\\,r_-\\,\\Sigma^6 + 12r_+^2\\,r_-^2\\,\\Sigma^4 + 8r_+\\,r_-\\,\\Sigma^6 + 8\\Sigma^8}{\\left(r + \\Sigma\\right)^6\\left(r - \\Sigma\\right)^6}"
+        },
+        {
+          "id": "string_ns",
+          "name": "String Metric, Winding and Momentum",
+          "coordinates": [
+            "t",
+            "r",
+            "\\theta",
+            "\\phi"
+          ],
+          "domains": [
+            "t \\in (-\\infty, \\infty)",
+            "r \\in (0, \\infty)",
+            "\\theta \\in [0, \\pi]",
+            "\\phi \\in [0, 2\\pi)",
+            "r_0 > 0,\\quad r_1 \\ge 0,\\quad r_p \\ge 0",
+            "r = r_0 \\;\\text{(the event horizon)}",
+            "r = 0 \\;\\text{(the singularity)}"
+          ],
+          "parameters": [
+            {
+              "symbol": "r_0",
+              "description": "Radius of the event horizon, a length"
+            },
+            {
+              "symbol": "r_1",
+              "description": "Winding length, $r_1 = r_0\\sinh^2\\gamma_1$ for the parameter $\\gamma_1$ of the winding charge of the string, proportional to $\\sinh 2\\gamma_1$"
+            },
+            {
+              "symbol": "r_p",
+              "description": "Momentum length, $r_p = r_0\\sinh^2\\gamma_p$ for the parameter $\\gamma_p$ of the momentum charge along the circle the string winds, proportional to $\\sinh 2\\gamma_p$"
+            }
+          ],
+          "convention": "We use the coordinates $(t, r, \\theta, \\phi)$ of Horowitz and Ross on the string metric $g_{\\mu\\nu}$ of the black hole [horowitz1997naked], with $t$ having dimensions of time, and take components in the chart $x^0 = ct$. The Einstein metric is $e^{-2\\varphi}g_{\\mu\\nu}$, with the dilaton $e^{-2\\varphi} = \\sqrt{(r + r_1)(r + r_p)}/r$. A dot in the geodesic equations is a derivative with respect to an affine parameter $\\lambda$, so $\\dot{t}$ means $d(ct)/d\\lambda$.",
+          "line_element": "ds^2 = -\\dfrac{r\\left(r - r_0\\right)}{\\left(r + r_1\\right)\\left(r + r_p\\right)}c^2dt^2 + \\dfrac{r\\,dr^2}{r - r_0} + r^2\\left(d\\theta^2 + \\sin^2\\theta\\,d\\phi^2\\right)",
+          "metric_components": [
+            {
+              "indices": [
+                "t",
+                "t"
+              ],
+              "value": "-\\dfrac{r\\left(r - r_0\\right)}{\\left(r + r_1\\right)\\left(r + r_p\\right)}"
+            },
+            {
+              "indices": [
+                "r",
+                "r"
+              ],
+              "value": "\\dfrac{r}{r - r_0}"
+            },
+            {
+              "indices": [
+                "\\theta",
+                "\\theta"
+              ],
+              "value": "r^2"
+            },
+            {
+              "indices": [
+                "\\phi",
+                "\\phi"
+              ],
+              "value": "r^2\\sin^2\\theta"
+            }
+          ],
+          "ricci_scalar": "R = -\\dfrac{3r^3\\,r_0\\,r_1 + 3r^3\\,r_0\\,r_p + 3r^3\\,r_1^2 + 2r^3\\,r_1\\,r_p + 3r^3\\,r_p^2 + 10r^2\\,r_0\\,r_1\\,r_p + 8r^2\\,r_1^2\\,r_p + 8r^2\\,r_1\\,r_p^2 + r\\,r_0\\,r_1^2\\,r_p + r\\,r_0\\,r_1\\,r_p^2 + 8r\\,r_1^2\\,r_p^2 - 2r_0\\,r_1^2\\,r_p^2}{2r^3\\left(r + r_1\\right)^2\\left(r + r_p\\right)^2}",
+          "kretschmann": "K = \\dfrac{48r^8\\,r_0^2 + 48r^8\\,r_0\\,r_1 + 48r^8\\,r_0\\,r_p + 24r^8\\,r_1^2 + 48r^8\\,r_1\\,r_p + 24r^8\\,r_p^2 + 120r^7\\,r_0^2\\,r_1 + 120r^7\\,r_0^2\\,r_p + 48r^7\\,r_0\\,r_1^2 + 224r^7\\,r_0\\,r_1\\,r_p + 48r^7\\,r_0\\,r_p^2 + 24r^7\\,r_1^3 + 200r^7\\,r_1^2\\,r_p + 200r^7\\,r_1\\,r_p^2 + 24r^7\\,r_p^3 + 153r^6\\,r_0^2\\,r_1^2 + 322r^6\\,r_0^2\\,r_1\\,r_p + 153r^6\\,r_0^2\\,r_p^2 + 18r^6\\,r_0\\,r_1^3 + 110r^6\\,r_0\\,r_1^2\\,r_p + 110r^6\\,r_0\\,r_1\\,r_p^2 + 18r^6\\,r_0\\,r_p^3 + 9r^6\\,r_1^4 + 172r^6\\,r_1^3\\,r_p + 502r^6\\,r_1^2\\,r_p^2 + 172r^6\\,r_1\\,r_p^3 + 9r^6\\,r_p^4 + 96r^5\\,r_0^2\\,r_1^3 + 500r^5\\,r_0^2\\,r_1^2\\,r_p + 500r^5\\,r_0^2\\,r_1\\,r_p^2 + 96r^5\\,r_0^2\\,r_p^3 - 20r^5\\,r_0\\,r_1^3\\,r_p - 248r^5\\,r_0\\,r_1^2\\,r_p^2 - 20r^5\\,r_0\\,r_1\\,r_p^3 + 56r^5\\,r_1^4\\,r_p + 392r^5\\,r_1^3\\,r_p^2 + 392r^5\\,r_1^2\\,r_p^3 + 56r^5\\,r_1\\,r_p^4 + 24r^4\\,r_0^2\\,r_1^4 + 358r^4\\,r_0^2\\,r_1^3\\,r_p + 880r^4\\,r_0^2\\,r_1^2\\,r_p^2 + 358r^4\\,r_0^2\\,r_1\\,r_p^3 + 24r^4\\,r_0^2\\,r_p^4 - 26r^4\\,r_0\\,r_1^4\\,r_p - 310r^4\\,r_0\\,r_1^3\\,r_p^2 - 310r^4\\,r_0\\,r_1^2\\,r_p^3 - 26r^4\\,r_0\\,r_1\\,r_p^4 + 120r^4\\,r_1^4\\,r_p^2 + 304r^4\\,r_1^3\\,r_p^3 + 120r^4\\,r_1^2\\,r_p^4 + 96r^3\\,r_0^2\\,r_1^4\\,r_p + 656r^3\\,r_0^2\\,r_1^3\\,r_p^2 + 656r^3\\,r_0^2\\,r_1^2\\,r_p^3 + 96r^3\\,r_0^2\\,r_1\\,r_p^4 - 108r^3\\,r_0\\,r_1^4\\,r_p^2 - 296r^3\\,r_0\\,r_1^3\\,r_p^3 - 108r^3\\,r_0\\,r_1^2\\,r_p^4 + 96r^3\\,r_1^4\\,r_p^3 + 96r^3\\,r_1^3\\,r_p^4 + 177r^2\\,r_0^2\\,r_1^4\\,r_p^2 + 490r^2\\,r_0^2\\,r_1^3\\,r_p^3 + 177r^2\\,r_0^2\\,r_1^2\\,r_p^4 - 96r^2\\,r_0\\,r_1^4\\,r_p^3 - 96r^2\\,r_0\\,r_1^3\\,r_p^4 + 32r^2\\,r_1^4\\,r_p^4 + 132r\\,r_0^2\\,r_1^4\\,r_p^3 + 132r\\,r_0^2\\,r_1^3\\,r_p^4 - 32r\\,r_0\\,r_1^4\\,r_p^4 + 36r_0^2\\,r_1^4\\,r_p^4}{4r^6\\left(r + r_1\\right)^4\\left(r + r_p\\right)^4}"
+        }
+      ]
+    },
+    {
       "id": "nappi_witten",
       "name": "Nappi-Witten Closed Expanding Universe",
       "short_name": "Nappi-Witten Universe",
@@ -70585,6 +70890,11 @@
           "id": "bmpv",
           "kind": "family",
           "text": "A charged hole of five dimensions with spin, supersymmetric and regular. With no spin it is the extreme Reissner-Nordström hole of five dimensions [gauntlett1999]."
+        },
+        {
+          "id": "naked_black_holes",
+          "kind": "generalisation",
+          "text": "Charged black holes with a dilaton coupled at strength $a$, which at $a = 0$ are the Reissner-Nordström black hole. Close to extremality and large, they crush a falling body sideways before it reaches the horizon [horowitz1997naked]."
         }
       ],
       "references": [
@@ -70644,7 +70954,8 @@
         "cano2019",
         "husain1996null",
         "schein1996",
-        "gauntlett1999"
+        "gauntlett1999",
+        "horowitz1997naked"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/rn_metric.json",
@@ -74558,6 +74869,11 @@
           "id": "repulson",
           "kind": "family",
           "text": "A naked singularity of string theory that repels massive particles, acting on them \"as a body with a negative mass\" [kallosh1995white]."
+        },
+        {
+          "id": "naked_black_holes",
+          "kind": "generalisation",
+          "text": "Charged black holes with a dilaton, which with no charge are Schwarzschild's. Close to extremality their curvature grows under a radial boost, and a body falling in is crushed sideways outside the horizon [horowitz1997naked]."
         }
       ],
       "references": [
@@ -74711,7 +75027,8 @@
         "bicak1993",
         "chan1995",
         "clement2004",
-        "kallosh1995white"
+        "kallosh1995white",
+        "horowitz1997naked"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/schwarzschild.json",
@@ -84012,6 +84329,11 @@
           "id": "bmpv",
           "kind": "family",
           "text": "The hole of five dimensions with its charges equal set spinning. Its angular momenta in its two planes are equal in size and opposite in sign, and its horizon does not rotate [breckenridge1997, gauntlett1999]."
+        },
+        {
+          "id": "naked_black_holes",
+          "kind": "family",
+          "text": "Large charged black holes close to extremality whose tidal forces crush a falling body outside the horizon. The hole of five dimensions with three charges is one of them when one charge is much smaller than another [horowitz1997naked]."
         }
       ],
       "references": [
@@ -84032,7 +84354,8 @@
         "strominger1998",
         "cvetic1995singular",
         "breckenridge1997",
-        "gauntlett1999"
+        "gauntlett1999",
+        "horowitz1997naked"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/string_bh_three_four_charges.json",
@@ -84567,6 +84890,11 @@
           "id": "klebanov_witten",
           "kind": "family",
           "text": "Threebranes at a conifold tip approach anti-de Sitter space of five dimensions times $T^{1,1}$ in the limit near their horizon. The product has ten dimensions, one radius for both factors, compact isometry $SU(2)\\times SU(2)\\times U(1)$, and eight supersymmetries [klebanovwitten1998]."
+        },
+        {
+          "id": "naked_black_holes",
+          "kind": "family",
+          "text": "Charged black holes whose tidal forces grow huge just outside the horizon close to extremality. Among the extreme branes with one Ramond-Ramond charge, the three-brane alone keeps its tidal forces finite at its horizon [horowitz1997naked]."
         }
       ],
       "references": [
@@ -84588,7 +84916,8 @@
         "lin2004",
         "blau2002penrose",
         "berenstein2002",
-        "klebanovwitten1998"
+        "klebanovwitten1998",
+        "horowitz1997naked"
       ],
       "page_url": "https://damiansowinski.com/MFS/",
       "data_url": "https://damiansowinski.com/MFS/assets/data/metrics/three_brane_throat.json",

@@ -1941,7 +1941,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "265ce86f1c26af8a",
+    "version": "f9d73876818838eb",
     "diagrams": "4ab31bd70f52c64d",
     "conformal": "4f70e6c1c64a2506",
     "embedding": "0ccedb0f3c6098dc",
@@ -3568,7 +3568,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "4fe507e7bf938c8b",
+    "version": "1836d51b32f761fe",
     "diagrams": "90d54985332dcf14",
     "conformal": "5cfc3dbdae277601",
     "embedding": "94f99c7e8cc53d34",
@@ -5383,6 +5383,46 @@
     "curvature": "00db200db43a22e2"
   },
   {
+    "id": "naked_black_holes",
+    "name": "Naked Black Holes",
+    "tags": [
+      "static",
+      "stationary",
+      "spherically symmetric",
+      "four-dimensional",
+      "black hole",
+      "charged black hole",
+      "electric charge",
+      "magnetic charge",
+      "mass",
+      "electromagnetic field",
+      "dilaton",
+      "scalar field",
+      "Einstein-Maxwell-dilaton",
+      "string theory",
+      "low energy string theory",
+      "extremal",
+      "cosmic censorship",
+      "information paradox",
+      "curvature singularity",
+      "null singularity",
+      "timelike singularity",
+      "horizon",
+      "event horizon",
+      "inner horizon",
+      "asymptotically flat",
+      "exact solution",
+      "Lorentzian",
+      "Einstein equations",
+      "idealized model"
+    ],
+    "version": "d911188f44c96e3f",
+    "diagrams": "961b9074912971c6",
+    "conformal": "b006c3446b4d7e12",
+    "embedding": "8bae21785bb7cbc0",
+    "curvature": "4280569e93621634"
+  },
+  {
     "id": "nappi_witten",
     "name": "Nappi-Witten Universe",
     "tags": [
@@ -6220,7 +6260,7 @@
       "four-dimensional",
       "idealized model"
     ],
-    "version": "51d5ccd5f7a6c0ae",
+    "version": "e8757f14520e893c",
     "diagrams": "4565bff8ba921a42",
     "conformal": "40fb815a0f8a324b",
     "embedding": "1f6d4a7541295881",
@@ -6628,7 +6668,7 @@
       "Birkhoff theorem",
       "gravitational redshift"
     ],
-    "version": "566e4bba75decf8a",
+    "version": "1fac43c834c6b239",
     "diagrams": "60920c375eef2fab",
     "conformal": "7690624610632b5b",
     "embedding": "9b1644f6000a6db1",
@@ -7450,7 +7490,7 @@
       "idealized model",
       "dyon"
     ],
-    "version": "e53bed147514dc8c",
+    "version": "4adc7a783ac6a38f",
     "diagrams": "3ed264d5e1cddbce",
     "conformal": "0d346a206bbd9515",
     "embedding": "1154c266ff9d9f93"
@@ -7492,7 +7532,7 @@
       "Einstein equations",
       "idealized model"
     ],
-    "version": "e086e841517d122e",
+    "version": "679e0574ca1651d1",
     "diagrams": "e574af654990108c",
     "conformal": "5eac0de61d9d83c8",
     "embedding": "7006f557a81541c6",

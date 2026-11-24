@@ -1,5 +1,5 @@
 {
-  "version": "e890d7424f5ab8b2",
+  "version": "53b394591aba0f00",
   "entries": {
     "minkowski1908": {
       "type": "article",
@@ -50566,6 +50566,134 @@
         "eprint": "2410.16210",
         "archiveprefix": "arXiv",
         "url": "https://doi.org/10.1140/epjc/s10052-025-14038-8"
+      }
+    },
+    "horowitz1997naked": {
+      "type": "article",
+      "fields": {
+        "title": "Naked black holes",
+        "author": "Horowitz, Gary T. and Ross, Simon F.",
+        "journal": "Physical Review D",
+        "volume": "56",
+        "number": "4",
+        "pages": "2180--2187",
+        "year": "1997",
+        "doi": "10.1103/PhysRevD.56.2180",
+        "eprint": "hep-th/9704058",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.56.2180"
+      }
+    },
+    "horowitz1998properties": {
+      "type": "article",
+      "fields": {
+        "title": "Properties of naked black holes",
+        "author": "Horowitz, Gary T. and Ross, Simon F.",
+        "journal": "Physical Review D",
+        "volume": "57",
+        "number": "2",
+        "pages": "1098--1107",
+        "year": "1998",
+        "doi": "10.1103/PhysRevD.57.1098",
+        "eprint": "hep-th/9709050",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.57.1098"
+      }
+    },
+    "booth1999static": {
+      "type": "article",
+      "fields": {
+        "title": "Static and infalling quasilocal energy of charged and naked black holes",
+        "author": "Booth, I. S. and Mann, R. B.",
+        "journal": "Physical Review D",
+        "volume": "60",
+        "number": "12",
+        "pages": "124009",
+        "year": "1999",
+        "doi": "10.1103/PhysRevD.60.124009",
+        "eprint": "gr-qc/9907072",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.60.124009"
+      }
+    },
+    "lue2000": {
+      "type": "article",
+      "fields": {
+        "title": "Gravitational properties of monopole spacetimes near the black hole threshold",
+        "author": "Lue, Arthur and Weinberg, Erick J.",
+        "journal": "Physical Review D",
+        "volume": "61",
+        "number": "12",
+        "pages": "124003",
+        "year": "2000",
+        "doi": "10.1103/PhysRevD.61.124003",
+        "eprint": "hep-th/0001140",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.61.124003"
+      }
+    },
+    "zaslavskii2007": {
+      "type": "article",
+      "fields": {
+        "title": "Truly naked spherically symmetric and distorted black holes",
+        "author": "Zaslavskii, O. B.",
+        "journal": "Physical Review D",
+        "volume": "76",
+        "number": "2",
+        "pages": "024015",
+        "year": "2007",
+        "doi": "10.1103/PhysRevD.76.024015",
+        "eprint": "0706.2727",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1103/PhysRevD.76.024015"
+      }
+    },
+    "ovcharenko2025": {
+      "type": "article",
+      "fields": {
+        "title": "Naked and truly naked rotating black holes",
+        "author": "Ovcharenko, H. V. and Zaslavskii, O. B.",
+        "journal": "Journal of Mathematical Physics",
+        "volume": "66",
+        "number": "4",
+        "pages": "042502",
+        "year": "2025",
+        "doi": "10.1063/5.0262890",
+        "eprint": "2501.13719",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1063/5.0262890"
+      }
+    },
+    "herdeiro2026charged": {
+      "type": "article",
+      "fields": {
+        "title": "Charged, rotating black holes in {Einstein-Maxwell-dilaton} theory",
+        "author": "Herdeiro, Carlos A. R. and Radu, Eugen and dos Santos Costa Filho, Etevaldo",
+        "journal": "Journal of Cosmology and Astroparticle Physics",
+        "volume": "2026",
+        "number": "04",
+        "pages": "005",
+        "year": "2026",
+        "doi": "10.1088/1475-7516/2026/04/005",
+        "eprint": "2506.15798",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1088/1475-7516/2026/04/005"
+      }
+    },
+    "blazquez2026spinning": {
+      "type": "article",
+      "fields": {
+        "title": "Spinning extremal dyonic black holes in $\\gamma = 1$ {Einstein-Maxwell-dilaton} theory",
+        "author": "Bl\\'azquez-Salcedo, Jose Luis and Herdeiro, Carlos and Radu, Eugen and dos Santos Costa Filho, Etevaldo and Uzawa, Kunihito",
+        "journal": "Journal of High Energy Physics",
+        "volume": "2026",
+        "number": "04",
+        "pages": "078",
+        "year": "2026",
+        "doi": "10.1007/JHEP04(2026)078",
+        "eprint": "2512.20698",
+        "archiveprefix": "arXiv",
+        "url": "https://doi.org/10.1007/JHEP04(2026)078"
       }
     }
   }
