@@ -57,5 +57,28 @@ class ASubscriptedFunction(unittest.TestCase):
         self.assertEqual(reader("\\arcsin(k x) + \\mathrm{arsinh}(k x)"), self.sp.asin(k * x) + self.sp.asinh(k * x))
 
 
+@unittest.skipUnless(HAS_SYMPY, "sympy is not installed")
+class ASignedSubscript(unittest.TestCase):
+    """A parameter whose subscript is a sign, as Banados's horizon radius r_+, is read whole, alone
+    and inside the definition of another name."""
+
+    def setUp(self):
+        import sympy
+        import verify_metrics
+        self.sp, self.vm = sympy, verify_metrics
+
+    def test_r_plus_is_one_name(self):
+        reader = self.vm.Reader(["t", "r"], ["l", "r_+"], ())
+        r, rp = reader.symbol["r"], reader.parameters["r_+"]
+        self.assertEqual(rp.name, "r_+")
+        self.assertEqual(self.sp.expand(reader("\\left(r^2 - r_+^2\\right) + 2r_+r")),
+                         self.sp.expand(r ** 2 - rp ** 2 + 2 * rp * r))
+
+    def test_r_plus_inside_a_definition(self):
+        reader = self.vm.Reader(["y", "x"], ["r_+", "r = r_+\\dfrac{1 + y^2}{1 - y^2}"], ())
+        y, rp = reader.symbol["y"], reader.parameters["r_+"]
+        self.assertEqual(self.sp.simplify(reader("r") - rp * (1 + y ** 2) / (1 - y ** 2)), 0)
+
+
 if __name__ == "__main__":
     unittest.main()

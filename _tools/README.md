@@ -2669,6 +2669,7 @@ A definition may hold a name defined before it, as the squared lapse of `kerr_me
 A value stated only for the definitions, as a Ricci scalar written $R = 0$ would be for that chart, is still compared written out and has to come within the budget; `_tools/derivations/kerr_melvin.md` Step 3 is the worked example, where it did not, and the scalar is published in the names.
 
 A parameter with a subscript may be written against the letters before it, as the $b_0$ of $2ab_0^2$: the parser splits a token it does not know letter by letter, which would leave a stray `_0` and multiply the term by zero without a word, so `Reader._part_subscripted` parts the declared name from what stands before it and refuses any other unknown token that holds an underscore.
+A parameter whose subscript is a sign, as the horizon radius $r_+$ of `constant_curvature_black_hole`, is read under the spelling `r_plus`, and $r_-$ under `r_minus`, while its symbol keeps its own name, so the printer writes it back as $r_+$.
 A defined name may carry a command in its subscript, as Kerr-de Sitter's `\Delta_\theta`, which `Reader` reads whole as it reads `\chi_0`.
 `_tools/derivations/teo_wormhole.md` Step 6 is where that was found.
 

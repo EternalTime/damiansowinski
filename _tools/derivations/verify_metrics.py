@@ -4128,11 +4128,18 @@ class Reader:
         # Greek letters are turned into words below, and \chi_0 would otherwise be read as chi
         # times a stray _0, which is zero. The subscript may be a command too, as in \Delta_\theta.
         self.spelled = {}
+        # A parameter whose subscript is a sign, as Banados's horizon radius r_+, is read under a
+        # spelling the parser takes, r_plus, and keeps its own name as its symbol.
+        signed = {}
         for declaration in parameters:
             self._declare_parameter(declaration)
             spelling = declaration.split("=")[0].strip()
             if re.fullmatch(r"\\[A-Za-z]+_\\?\w+", spelling):
                 self.spelled[spelling] = self._plain(spelling)
+            elif re.fullmatch(r"[A-Za-z]+_[+-]", spelling):
+                read = spelling[:-1] + ("plus" if spelling.endswith("+") else "minus")
+                self.spelled[spelling] = read
+                signed[read] = self._plain(spelling)
         self.allowed = (
             set(self.symbol.values())
             | set(self.differential.values())
@@ -4144,6 +4151,7 @@ class Reader:
             self.allowed |= value.free_symbols
         self.local = {str(s): s for s in self.allowed}
         self.local.update(self.parameters)
+        self.local.update({read: self.parameters[name] for read, name in signed.items() if name in self.parameters})
         self.local.update(FUNCTIONS)
         # \delta(u) is the Dirac delta, and each prime on it one derivative with respect to its
         # argument, unless the system names a parameter \delta of its own, as the cosmic
